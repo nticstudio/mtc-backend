@@ -97,8 +97,8 @@ class Consult
     private $transitIntestinal;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="consults")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="consults" )
+     * @ORM\JoinColumn(nullable=true)
      */
     private $createdBy;
 
