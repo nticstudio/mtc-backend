@@ -71,6 +71,11 @@ class User implements UserInterface
      */
     private $patients;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="users")
+     */
+    private $company;
+
     public function __construct()
     {
         $this->consults = new ArrayCollection();
@@ -250,6 +255,18 @@ class User implements UserInterface
                 $patient->setCreatedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }
