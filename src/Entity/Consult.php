@@ -9,11 +9,15 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\Entity(repositoryClass=ConsultRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"consult"}}
+ * )
+ * @Apifilter(
+ *      SearchFilter::class, properties= { "patient.id": "exact"}
  * )
  * @Gedmo\SoftDeleteable()
  */
