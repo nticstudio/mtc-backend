@@ -44,66 +44,79 @@ class Consult
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"consult"})
      */
     private $symptomePrinc;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"consult"})
      */
     private $symptomePrincHisto;
 
     /**
      * @ORM\Column(type="text", length=255)
+     * @Groups({"consult"})
      */
     private $symptomeAssocie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"consult"})
      */
     private $antecedent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"consult"})
      */
     private $allureRessentiEnergie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"consult"})
      */
     private $teintVisage;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"consult"})
      */
     private $zoneColoreVisage;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"consult"})
      */
     private $shen;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"consult"})
      */
     private $langue;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"consult"})
      */
     private $pouls;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"consult"})
      */
     private $morphologie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"consult"})
      */
     private $palpationAuscultationOlfaction;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"consult"})
      */
     private $transitIntestinal;
 
