@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=PatientRepository::class)
@@ -36,11 +38,13 @@ class Patient
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("consult")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("consult")     
      */
     private $lastname;
 
