@@ -91,16 +91,16 @@ class Consult
     private $shen;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      * @Groups({"consult"})
      */
-    private $langue;
+    private $langue = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      * @Groups({"consult"})
      */
-    private $pouls;
+    private $pouls = [];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -146,6 +146,8 @@ class Consult
      * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
+
+   
 
     /**
      * Sets createdAt.
@@ -304,24 +306,25 @@ class Consult
         return $this;
     }
 
-    public function getLangue(): ?string
+    public function getLangue(): ?array
     {
         return $this->langue;
     }
 
-    public function setLangue(?string $langue): self
+    public function setLangue(?array $langue): self
     {
         $this->langue = $langue;
 
         return $this;
     }
 
-    public function getPouls(): ?string
+
+    public function getPouls(): ?array
     {
         return $this->pouls;
     }
 
-    public function setPouls(?string $pouls): self
+    public function setPouls(?array $pouls): self
     {
         $this->pouls = $pouls;
 
@@ -387,4 +390,6 @@ class Consult
 
         return $this;
     }
+
+ 
 }
