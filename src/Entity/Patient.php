@@ -34,7 +34,7 @@ class Patient
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:patients"})
+     * @Groups({"read:patients","read:consults"})
      */
     private $id;
 
