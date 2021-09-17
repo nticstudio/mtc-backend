@@ -142,7 +142,7 @@ class Consult
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Groups({"read:consults"})
+     * @Groups({"read:consults","read:patient"})
      */
     protected $createdAt;
 
