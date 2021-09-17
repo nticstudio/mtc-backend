@@ -14,7 +14,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\Entity(repositoryClass=ConsultRepository::class)
  * @ApiResource(
- *      normalizationContext={"groups"={"consult"}}
+ *      normalizationContext={"groups"={"read:consults"}},
+*      itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"read:consults","read:consult"}}
+ *           }
+ *      }
  * )
  * @Apifilter(
  *      SearchFilter::class, properties= { "patient.id": "exact"}
@@ -32,103 +37,104 @@ class Consult
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"consult"})
+     * @Groups({"read:consults","read:patient"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"consult"})
+     * @Groups({"read:consults","read:patient"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $symptomePrinc;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $symptomePrincHisto;
 
     /**
      * @ORM\Column(type="text", length=255)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $symptomeAssocie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $antecedent;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $allureRessentiEnergie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $teintVisage;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $zoneColoreVisage;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $shen;
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $langue = [];
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $pouls = [];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $morphologie;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $palpationAuscultationOlfaction;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"consult"})
+     * @Groups({"read:consult"})
      */
     private $transitIntestinal;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="consults" )
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"read:consult"})
      */
     private $createdBy;
 
     /**
      * @ORM\ManyToOne(targetEntity=Patient::class, inversedBy="consults")
-     * @Groups({"consult"})
+     * @Groups({"read:consults"})
      */
     private $patient;
 
@@ -136,7 +142,7 @@ class Consult
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Groups({"consult"})
+     * @Groups({"read:consults"})
      */
     protected $createdAt;
 
@@ -144,6 +150,7 @@ class Consult
      * @var \DateTime
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
+     * @Groups({"read:consult"})
      */
     protected $updatedAt;
 

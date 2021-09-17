@@ -15,96 +15,116 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PatientRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"read:patients"}} ,
+ *      itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"read:patients","read:patient"}}
+ *           }
+ *      }
+ * )
  * @Gedmo\SoftDeleteable()
  */
 class Patient
 {
 
-    use TimestampableEntity;
     use SoftDeleteableEntity;
     
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:patients"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"read:patients"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("consult")
+     * @Groups({"read:patients","read:consults"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("consult")     
+     * @Groups({"read:patients","read:consults"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"read:patient"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *  @Groups({"read:patient"})
      */
     private $situationfam;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read:patients"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read:patient"})
      */
     private $paysnai;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"read:patient"})
      */
     private $nbenfant;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read:patient"})
      */
     private $profession;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"read:patient"})
      */
     private $tabac;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"read:patient"})
      */
     private $alcool;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read:patient"})
      */
     private $sport;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read:patient"})
      */
     private $medication;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read:patient"})
      */
     private $protese;
 
     /**
      * @ORM\OneToMany(targetEntity=Consult::class, mappedBy="patient")
+     * @Groups({"read:patient"})
      */
     private $consults;
 
@@ -112,6 +132,25 @@ class Patient
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="patients")
      */
     private $createdBy;
+
+     /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     * @Groups({"read:patients"})
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     * @Groups({"read:patient"})
+     */
+    protected $updatedAt;
+
+   
+
 
     public function __construct()
     {
@@ -333,6 +372,51 @@ class Patient
         $this->createdBy = $createdBy;
 
         return $this;
+    }
+
+
+    /**
+     * Sets createdAt.
+     *
+     * @return $this
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Returns createdAt.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Sets updatedAt.
+     *
+     * @return $this
+     */
+    public function setUpdatedAt(\DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Returns updatedAt.
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     
