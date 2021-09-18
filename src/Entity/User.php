@@ -11,12 +11,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "me"={
+ *               "path"= "/me",
+ *               "method" = "get",
+ *               "controller" = MeController::class,
+ *               "read"= false
+ *           }
+ *     },
+ *    normalizationContext= { "groups": {"read:user"}}
+ * )
  * @Gedmo\SoftDeleteable()
  */
-class User implements UserInterface
+class User implements UserInterface, JWTUserInterface
 {
 
     use TimestampableEntity;
@@ -26,31 +39,37 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"read:user"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:user"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read:user"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"read:user"})
      */
     private $roles = [];
 
@@ -269,5 +288,22 @@ class User implements UserInterface
         $this->company = $company;
 
         return $this;
+    }
+
+    public function setId(?int $id):self 
+    {
+        $this->id = $id;
+
+        return $this;
+
+    }
+
+    public static  function createFromPayload($id, array $payload) {
+        $user =  (new User())->setId($id)->setEmail($payload['email'])->setLastname($payload['lastname'])->setFirstname($payload['firstname'])->setPhone($payload['phone']);
+
+       // $user->setId($payload->id)
+
+       return $user;
+
     }
 }
