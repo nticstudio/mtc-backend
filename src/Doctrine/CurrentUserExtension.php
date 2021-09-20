@@ -2,15 +2,15 @@
 
 namespace App\Doctrine;
 
+use App\Entity\Consult;
 use App\Entity\Patient;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Security;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 
+use App\Entity\User;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
-
-
 
 final class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface {
 
@@ -35,14 +35,16 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
     {
         ///*|| $this->security->isGranted('ROLE_ADMIN') || */
-        if (Patient::class !== $resourceClass  || null === $user = $this->security->getUser()) {
-            return;
+        if (Patient::class === $resourceClass  || Consult::class === $resourceClass  ) {
+        
+            $user = $this->security->getUser();
+            if($user instanceof User) {
+                $alias = $queryBuilder->getRootAliases()[0];
+                $queryBuilder->andWhere("$alias.createdBy = :current_user")
+                ->setParameter('current_user',$user->getId());
+             }
         }
-
-
-        $alias = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->andWhere("$alias.createdBy = :current_user")
-        ->setParameter('current_user',$user->getId());
+        return;
     
     }
 
