@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      normalizationContext={"groups"={"read:patients"}} ,
  *      itemOperations={
  *          "get"={
- *              "normalization_context"={"groups"={"read:patients","read:patient"}}
+ *              "normalization_context"={"groups"={"read:patients","read:patient","write:patient"}}
  *           }
  *      }
  * )
@@ -39,7 +39,7 @@ class Patient
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
      * @Groups({"read:patients"})
      */
     private $email;
@@ -130,6 +130,7 @@ class Patient
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="patients")
+     * @Groups({"read:patient"})
      */
     private $createdBy;
 
@@ -137,7 +138,7 @@ class Patient
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Groups({"read:patients"})
+     * @Groups({"write:patient"})
      */
     protected $createdAt;
 

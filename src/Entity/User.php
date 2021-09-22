@@ -99,6 +99,7 @@ class User implements UserInterface, JWTUserInterface
     {
         $this->consults = new ArrayCollection();
         $this->patients = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
