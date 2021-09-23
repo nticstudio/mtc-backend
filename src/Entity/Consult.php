@@ -22,7 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      }
  * )
  * @Apifilter(
- *      SearchFilter::class, properties= { "patient.id": "exact"}
+ *      SearchFilter::class, properties= { "patient.id": "exact", "createdBy.id" : "exact"}
  * )
  * @Gedmo\SoftDeleteable()
  */
@@ -37,13 +37,13 @@ class Consult
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:consults","read:patient"})
+     * @Groups({"read:consults","read:patient","read:user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read:consults","read:patient"})
+     * @Groups({"read:consults","read:patient","read:user"})
      */
     private $type;
 
@@ -134,7 +134,7 @@ class Consult
 
     /**
      * @ORM\ManyToOne(targetEntity=Patient::class, inversedBy="consults")
-     * @Groups({"read:consults"})
+     * @Groups({"read:consults","read:user"})
      */
     private $patient;
 
@@ -142,7 +142,7 @@ class Consult
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Groups({"read:consults","read:patient"})
+     * @Groups({"read:consults","read:patient","read:user"})
      */
     protected $createdAt;
 

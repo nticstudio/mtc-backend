@@ -23,9 +23,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               "method" = "get",
  *               "controller" = MeController::class,
  *               "read"= false
- *           }
+ *           },
+ *          "get"
  *     },
- *    normalizationContext= { "groups": {"read:user"}}
+ *    normalizationContext= { "groups": {"read:users"}},
+ *      itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"read:users","read:user"}}
+ *           }
+ *      }
  * )
  * @Gedmo\SoftDeleteable()
  */
@@ -39,37 +45,37 @@ class User implements UserInterface, JWTUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:user"})
+     * @Groups({"read:users"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"read:user"})
+     * @Groups({"read:users"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read:user"})
+     * @Groups({"read:users"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read:user"})
+     * @Groups({"read:users"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read:user"})
+     * @Groups({"read:users"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"read:user"})
+     * @Groups({"read:users"})
      */
     private $roles = [];
 
@@ -82,11 +88,13 @@ class User implements UserInterface, JWTUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Consult::class, mappedBy="createdBy")
+     * @Groups({"read:user"})
      */
     private $consults;
 
     /**
      * @ORM\OneToMany(targetEntity=Patient::class, mappedBy="createdBy")
+     * @Groups({"read:user"})
      */
     private $patients;
 
@@ -94,6 +102,22 @@ class User implements UserInterface, JWTUserInterface
      * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="users")
      */
     private $company;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     * @Groups({"read:users"})
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     * @Groups({"read:user"})
+     */
+    protected $updatedAt;
 
     public function __construct()
     {

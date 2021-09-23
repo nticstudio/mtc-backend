@@ -34,25 +34,25 @@ class Patient
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:patients","read:consults"})
+     * @Groups({"read:patients","read:consults","read:user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180)
-     * @Groups({"read:patients"})
+     * @Groups({"read:patients","read:user"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read:patients","read:consults"})
+     * @Groups({"read:patients","read:consults","read:user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read:patients","read:consults"})
+     * @Groups({"read:patients","read:consults","read:user"})
      */
     private $lastname;
 
@@ -70,7 +70,7 @@ class Patient
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read:patients"})
+     * @Groups({"read:patients","read:user"})
      */
     private $phone;
 
@@ -138,7 +138,7 @@ class Patient
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Groups({"write:patient"})
+     * @Groups({"write:patient","read:user"})
      */
     protected $createdAt;
 
