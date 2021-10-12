@@ -213,6 +213,22 @@
     "psr/log": {
         "version": "1.1.4"
     },
+    "scheb/2fa-bundle": {
+        "version": "5.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "62660e7d21b8b5295c5a6f8ca17dc7099881f267"
+        },
+        "files": [
+            "config/packages/scheb_2fa.yaml",
+            "config/routes/scheb_2fa.yaml"
+        ]
+    },
+    "scheb/2fa-email": {
+        "version": "v5.12.1"
+    },
     "sebastian/comparator": {
         "version": "4.0.6"
     },
