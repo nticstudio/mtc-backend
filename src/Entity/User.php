@@ -12,6 +12,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
+use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -35,7 +38,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @Gedmo\SoftDeleteable()
  */
-class User implements UserInterface, JWTUserInterface
+class User implements UserInterface, JWTUserInterface, TwoFactorInterface
 {
 
     use TimestampableEntity;
@@ -118,6 +121,11 @@ class User implements UserInterface, JWTUserInterface
      * @Groups({"read:user"})
      */
     protected $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $authCode;
 
     public function __construct()
     {
@@ -330,5 +338,33 @@ class User implements UserInterface, JWTUserInterface
 
        return $user;
 
+    }
+
+    /**
+     * Return true if the user should do two-factor authentication.
+     */
+    public function isEmailAuthEnabled(): bool  {
+        return true;
+    }
+
+    /**
+     * Return user email address.
+     */
+    public function getEmailAuthRecipient():string {
+        return $this->getEmail();
+    }
+
+    /**
+     * Return the authentication code.
+     */
+    public function getEmailAuthCode():string {
+        return $this->authCode;
+    }
+
+    /**
+     * Set the authentication code.
+     */
+    public function setEmailAuthCode(string $authCode):void {
+         $this->authCode = $authCode;
     }
 }
