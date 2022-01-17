@@ -141,10 +141,10 @@
         "version": "1.2.0"
     },
     "lcobucci/jwt": {
-        "version": "3.4.5"
+        "version": "3.4.6"
     },
     "lexik/jwt-authentication-bundle": {
-        "version": "2.5",
+        "version": "2.14",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
@@ -343,6 +343,9 @@
     },
     "symfony/orm-pack": {
         "version": "v2.1.0"
+    },
+    "symfony/password-hasher": {
+        "version": "v5.3.8"
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.22.1"

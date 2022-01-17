@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @Gedmo\SoftDeleteable()
  */
-class User implements UserInterface, JWTUserInterface
+class User implements UserInterface
 {
 
     use TimestampableEntity;
