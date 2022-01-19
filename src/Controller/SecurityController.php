@@ -28,5 +28,7 @@ class SecurityController extends AbstractController
     public function logout() {
         return new JsonResponse(null,204);
     }
+
+
     
 }

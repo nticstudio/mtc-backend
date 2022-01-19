@@ -2,17 +2,18 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -35,7 +36,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @Gedmo\SoftDeleteable()
  */
-class User implements UserInterface
+class User implements UserInterface, JWTUserInterface , TwoFactorInterface
 {
 
     use TimestampableEntity;
@@ -118,6 +119,11 @@ class User implements UserInterface
      * @Groups({"read:user"})
      */
     protected $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $authCode;
 
     public function __construct()
     {
@@ -330,5 +336,29 @@ class User implements UserInterface
 
        return $user;
 
+    }
+
+    public function isEmailAuthEnabled(): bool
+    {
+        return true; // This can be a persisted field to switch email code authentication on/off
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): string
+    {
+        if (null === $this->authCode) {
+            throw new \LogicException('The email authentication code was not set');
+        }
+
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void
+    {
+        $this->authCode = $authCode;
     }
 }
