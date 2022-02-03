@@ -80,7 +80,7 @@ class Consult
     private $allureRessentiEnergie;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="smallint",  nullable=true)
      * @Groups({"read:consult"})
      */
     private $teintVisage;
@@ -92,7 +92,7 @@ class Consult
     private $zoneColoreVisage;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"read:consult"})
      */
     private $shen;
@@ -110,7 +110,7 @@ class Consult
     private $pouls = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"read:consult"})
      */
     private $morphologie;
@@ -321,12 +321,12 @@ class Consult
         return $this;
     }
 
-    public function getTeintVisage(): ?string
+    public function getTeintVisage(): ?int
     {
         return $this->teintVisage;
     }
 
-    public function setTeintVisage(?string $teintVisage): self
+    public function setTeintVisage(?int $teintVisage): self
     {
         $this->teintVisage = $teintVisage;
 
@@ -345,12 +345,12 @@ class Consult
         return $this;
     }
 
-    public function getShen(): ?string
+    public function getShen(): ?int
     {
         return $this->shen;
     }
 
-    public function setShen(?string $shen): self
+    public function setShen(?int $shen): self
     {
         $this->shen = $shen;
 
@@ -382,12 +382,12 @@ class Consult
         return $this;
     }
 
-    public function getMorphologie(): ?string
+    public function getMorphologie(): ?int
     {
         return $this->morphologie;
     }
 
-    public function setMorphologie(?string $morphologie): self
+    public function setMorphologie(?int $morphologie): self
     {
         $this->morphologie = $morphologie;
 
