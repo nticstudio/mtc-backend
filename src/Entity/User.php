@@ -31,7 +31,9 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
  *      itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"read:users","read:user"}}
- *           }
+ *           },
+ *          "put"={},
+ *          "delete"={},
  *      }
  * )
  * @Gedmo\SoftDeleteable()
@@ -361,4 +363,5 @@ class User implements UserInterface, JWTUserInterface , TwoFactorInterface
     {
         $this->authCode = $authCode;
     }
+
 }

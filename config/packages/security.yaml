@@ -1,18 +1,11 @@
 security:
 
-    # https://symfony.com/doc/current/security.html#c-hashing-passwords
     password_hashers:
         App\Entity\User: 'auto'
 
-    # https://symfony.com/doc/current/security/authenticator_manager.html
     enable_authenticator_manager: true
    
     providers:
-        # db_provider:
-            # entity:
-                # class: App\Entity\User
-                # property: email
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
@@ -22,35 +15,46 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false                 
         login:
+            lazy: true
             pattern: ^/api/login
-            two_factor:
-                prepare_on_login: true
-                prepare_on_access_denied: true   
-                success_handler: App\Security\TwoFactorAuthenticationSuccessHandler  
-                failure_handler: App\Security\TwoFactorAuthenticationFailureHandler 
-                authentication_required_handler:  App\Security\TwoFactorAuthenticationRequiredHandler
-                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
-                auth_code_parameter_name: authCode
-                                           
-            json_login:
-                check_path: api_login 
-                success_handler: App\Security\AuthenticationSuccessHandler
-                # success_handler: lexik_jwt_authentication.handler.authentication_success
-                # failure_handler: lexik_jwt_authentication.handler.authentication_failure  
-            
-            logout:
-                path: api_logout  
+            stateless: false
+        
+            provider: app_user_provider
 
+            json_login:
+                check_path: login 
+                # success_handler: App\Security\AuthenticationSuccessHandler
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure  
+                
+           # two_factor:
+            #    prepare_on_login: true
+                # prepare_on_access_denied: true   
+                # success_handler: App\Security\TwoFactorAuthenticationSuccessHandler  
+                # failure_handler: App\Security\TwoFactorAuthenticationFailureHandler 
+                # authentication_required_handler:  App\Security\TwoFactorAuthenticationRequiredHandler
+                # check_path: 2fa_login_check  # The route name you have used in the routes.yaml
+                # auth_code_parameter_name: authCode     
+             
+        main:
+            pattern: ^/api/logout
+            logout:
+                path: api_logout 
+        
         api:
             pattern: ^/api
-            jwt: ~  
+            jwt: ~ 
+            stateless: false            
 
 
     access_control:
-        - { path: ^/api/login$, roles: PUBLIC_ACCESS } # Allows to login
-        - { path: ^/api/login/2fa_check, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
-        # - { path: ^/api, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
-        - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS } # Allows to login
+
+        - { path: ^/api/ogin/2fa_check, role: PUBLIC_ACCESS }
+
+        - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+
+        - { path: ^/api, roles: PUBLIC_ACCESS }
  
            
         # /api/2fa_check

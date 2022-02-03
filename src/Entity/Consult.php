@@ -18,7 +18,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 *      itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"read:consults","read:consult"}}
- *           }
+ *           },
+ *          "put"={},
+ *          "delete"={},
  *      }
  * )
  * @Apifilter(
@@ -154,7 +156,49 @@ class Consult
      */
     protected $updatedAt;
 
-   
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $diagone;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $diagtwo;
+
+    /**
+     * @ORM\Column(type="smallint",  nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $diagthree;
+
+    /**
+     * @ORM\Column(type="smallint",  nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $diagfour;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $diagcom;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $syndrome;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read:consult"})
+     */
+    private $principeTraitement;
+
+    /** !TODO Une consultation possede un diagnostique  */   
 
     /**
      * Sets createdAt.
@@ -394,6 +438,90 @@ class Consult
     public function setPatient(?Patient $patient): self
     {
         $this->patient = $patient;
+
+        return $this;
+    }
+
+    public function getDiagone(): ?int
+    {
+        return $this->diagone;
+    }
+
+    public function setDiagone(?int $diagone): self
+    {
+        $this->diagone = $diagone;
+
+        return $this;
+    }
+
+    public function getDiagtwo(): ?int
+    {
+        return $this->diagtwo;
+    }
+
+    public function setDiagtwo(?int $diagtwo): self
+    {
+        $this->diagtwo = $diagtwo;
+
+        return $this;
+    }
+
+    public function getDiagthree(): ?int
+    {
+        return $this->diagthree;
+    }
+
+    public function setDiagthree(?int $diagthree): self
+    {
+        $this->diagthree = $diagthree;
+
+        return $this;
+    }
+
+    public function getDiagfour(): ?int
+    {
+        return $this->diagfour;
+    }
+
+    public function setDiagfour(?int $diagfour): self
+    {
+        $this->diagfour = $diagfour;
+
+        return $this;
+    }
+
+    public function getDiagcom(): ?string
+    {
+        return $this->diagcom;
+    }
+
+    public function setDiagcom(?string $diagcom): self
+    {
+        $this->diagcom = $diagcom;
+
+        return $this;
+    }
+
+    public function getSyndrome(): ?string
+    {
+        return $this->syndrome;
+    }
+
+    public function setSyndrome(?string $syndrome): self
+    {
+        $this->syndrome = $syndrome;
+
+        return $this;
+    }
+
+    public function getPrincipeTraitement(): ?string
+    {
+        return $this->principeTraitement;
+    }
+
+    public function setPrincipeTraitement(?string $principeTraitement): self
+    {
+        $this->principeTraitement = $principeTraitement;
 
         return $this;
     }

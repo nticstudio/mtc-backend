@@ -82,7 +82,9 @@
     },
     "require-dev": {
         "hautelook/alice-bundle": "^2.9",
+        "symfony/debug-bundle": "5.3.*",
         "symfony/maker-bundle": "^1.31",
+        "symfony/monolog-bundle": "^3.0",
         "symfony/stopwatch": "^5.3",
         "symfony/var-dumper": "5.3.*",
         "symfony/web-profiler-bundle": "^5.3"

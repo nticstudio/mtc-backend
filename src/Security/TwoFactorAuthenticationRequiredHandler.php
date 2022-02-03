@@ -12,7 +12,7 @@ class TwoFactorAuthenticationRequiredHandler implements AuthenticationRequiredHa
     public function onAuthenticationRequired(Request $request, TokenInterface $token): Response
     {
 
-        dd("TwoFactorAuthenticationRequiredHandler");
+        // dd("TwoFactorAuthenticationRequiredHandler");
         // Return the response to tell the client that authentication hasn't completed yet and
         // two-factor authentication is required.
         return new Response('{"error": "access_denied", "2fa_complete": false}');

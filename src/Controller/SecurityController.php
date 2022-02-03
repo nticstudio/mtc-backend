@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/api/login", name="api_login")
+     * @Route("/api/login", name="login")
      *     
      */
     public function login() {
@@ -22,7 +22,7 @@ class SecurityController extends AbstractController
     }
 
      /**
-     * @Route("/api/logout", name="api_logout", methods="POST")
+     * @Route("/api/logout", name="api_logout", methods="GET")
      *     
      */
     public function logout() {

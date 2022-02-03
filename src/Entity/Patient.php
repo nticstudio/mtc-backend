@@ -20,7 +20,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"read:patients","read:patient","write:patient"}}
- *           }
+ *           },
+ *        "put"={},
+ *        "delete"={},
  *      }
  * )
  * @Gedmo\SoftDeleteable()
@@ -63,7 +65,7 @@ class Patient
     private $age;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      *  @Groups({"read:patient"})
      */
     private $situationfam;
@@ -124,7 +126,6 @@ class Patient
 
     /**
      * @ORM\OneToMany(targetEntity=Consult::class, mappedBy="patient")
-     * @Groups({"read:patient"})
      */
     private $consults;
 
@@ -150,7 +151,23 @@ class Patient
      */
     protected $updatedAt;
 
-   
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"read:patient"})
+     */
+    private $genre;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"read:patient"})
+     */
+    private $enceinte;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"read:patient"})
+     */
+    private $pillule;
 
 
     public function __construct()
@@ -213,7 +230,7 @@ class Patient
         return $this;
     }
 
-    public function getSituationfam(): ?string
+    public function getSituationfam(): ?int
     {
         return $this->situationfam;
     }
@@ -418,6 +435,42 @@ class Patient
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function getGenre(): ?int
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?int $genre): self
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getEnceinte(): ?bool
+    {
+        return $this->enceinte;
+    }
+
+    public function setEnceinte(?bool $enceinte): self
+    {
+        $this->enceinte = $enceinte;
+
+        return $this;
+    }
+
+    public function getPillule(): ?bool
+    {
+        return $this->pillule;
+    }
+
+    public function setPillule(?bool $pillule): self
+    {
+        $this->pillule = $pillule;
+
+        return $this;
     }
 
     
