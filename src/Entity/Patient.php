@@ -83,7 +83,7 @@ class Patient
     private $paysnai;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @Groups({"read:patient"})
      */
     private $nbenfant;
