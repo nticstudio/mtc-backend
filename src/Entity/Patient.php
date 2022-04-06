@@ -139,7 +139,7 @@ class Patient
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
-     * @Groups({"write:patient","read:user"})
+     * @Groups({"read:patients","write:patient","read:user"})
      */
     protected $createdAt;
 
