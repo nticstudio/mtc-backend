@@ -1,0 +1,4 @@
+App\Entity\Note:
+    note_{1..20}:        
+        contenu: <text(255)>        
+        consult:  '@consult_*'
