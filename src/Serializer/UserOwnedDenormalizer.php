@@ -6,6 +6,7 @@ use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use App\Entity\Consult;
+use App\Entity\Note;
 use App\Entity\Patient;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 
@@ -30,7 +31,7 @@ class UserOwnedDenormalizer implements ContextAwareDenormalizerInterface, Denorm
 
 
             $alreadycalled = $context[self::ALREADY_DENORMALIZER] ?? false;
-            $types = Patient::class === $type  || Consult::class === $type;
+            $types = Patient::class === $type  || Consult::class === $type  || Note::class === $type;
           
             return $types && $alreadycalled === false;
         //}

@@ -8,11 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=NoteRepository::class)
  * @Gedmo\SoftDeleteable()
+ * @Apifilter(
+ *      SearchFilter::class, properties= { "consult.id": "exact", "createdBy.id" : "exact"}
+ * )
 */
 class Note
 {
@@ -32,7 +37,7 @@ class Note
     private $contenu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=consult::class, inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity=Consult::class, inversedBy="notes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $consult;

@@ -202,6 +202,7 @@ class Consult
 
     /**
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="consult", orphanRemoval=true)
+     * @Groups({"read:consult"})
      */
     private $notes;
 
